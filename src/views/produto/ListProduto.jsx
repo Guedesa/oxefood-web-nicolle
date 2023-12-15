@@ -22,6 +22,25 @@ export default function ListProduto() {
 
     function carregarLista() {
 
+        axios.get("http://localhost:8082/api/produto")
+            .then((response) => {
+                setLista(response.data)
+            })
+
+
+        axios.get("http://localhost:8082/api/categoriaProduto")
+            .then((response) => {
+
+                const dropDownCategorias = [];
+                dropDownCategorias.push({ text: '', value: '' });
+                response.data.map(c => (
+                    dropDownCategorias.push({ text: c.descricao, value: c.id })
+                ))
+
+                setListaCategoriaProduto(dropDownCategorias)
+
+            })
+
     }
     function confirmaRemover(id) {
         setOpenModal(true)
@@ -94,7 +113,7 @@ export default function ListProduto() {
     }
 
 
-    axios.get("http://localhost:8082/api/CategoriaProduto")
+    axios.get("http://localhost:8082/api/categoriaProduto")
         .then((response) => {
 
             const dropDownCategorias = [];
